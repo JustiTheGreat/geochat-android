@@ -16,7 +16,7 @@ import javax.net.ssl.HttpsURLConnection
 class RegisterTask(callbackContext: ICallbackContext?, private val registrationWriteDTO: RegistrationWriteDTO)
     : GeneralisedTask<UserReadDTO?>(callbackContext, null) {
     override fun doInBackground(vararg p0: Void): UserReadDTO? {
-        return try {
+        try {
             val connection = URL(ServiceURLs.REGISTER).openConnection() as HttpsURLConnection
             connection.requestMethod = "POST"
             connection.doOutput = true
@@ -32,25 +32,25 @@ class RegisterTask(callbackContext: ICallbackContext?, private val registrationW
 
             when (connection.responseCode) {
                 200 -> {
-                    FromJsonConverter.convertToUserReadDTO(readResponseBody(connection))
+                    return UserReadDTO();
                 }
 
                 400 -> {
                     errorMessage =
                         (callbackContext as Fragment).getString(R.string.wrong_credentials)
-                    null
+                    return null
                 }
 
                 500 -> {
                     errorMessage =
                         (callbackContext as Fragment).getString(R.string.internal_server_error)
-                    null
+                    return null
                 }
 
                 else -> {
                     errorMessage =
                         (callbackContext as Fragment).getString(R.string.unexpected_server_response)
-                    null
+                    return null
                 }
             }
         } catch (e: IOException) {

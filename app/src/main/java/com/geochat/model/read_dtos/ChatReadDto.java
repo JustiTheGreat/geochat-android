@@ -44,7 +44,7 @@ public class ChatReadDto {
     }
 
     public void addMessage(MessageReadDto message){
-        messages.add(messages.size(), message);
+        messages.add(0, message);
 //        messages.add(message);
     }
 

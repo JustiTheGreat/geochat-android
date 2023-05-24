@@ -25,13 +25,6 @@ import com.geochat.tasks.CreateMessageTask;
 import com.geochat.tasks.FallibleTask;
 import com.geochat.ui.adapters.MessageAdapter;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
-
 public class Chat extends UtilityFragment {
     private RecyclerView messages;
     private EditText messageEditText;
@@ -50,14 +43,15 @@ public class Chat extends UtilityFragment {
 
         chat = getOpenChat();
 
-        messages.setLayoutManager(new LinearLayoutManager(getContext()));
-        messages.setAdapter(new MessageAdapter(requireActivity().getApplicationContext(), chat.getMessages(), getAuthenticatedUser()));
         messages.setLayoutManager(
-                new LinearLayoutManager(requireContext()){{
+                new LinearLayoutManager(requireContext())
+                {{
                     setStackFromEnd(false);
                     setReverseLayout(true);
                 }}
         );
+        messages.setAdapter(new MessageAdapter(requireActivity().getApplicationContext(), chat.getMessages(), getAuthenticatedUser()));
+
 
         messageEditText.setOnClickListener(view -> messageEditText.setText(R.string.empty));
         sendMessage.setOnClickListener(view -> {
@@ -72,8 +66,14 @@ public class Chat extends UtilityFragment {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void updateChat(MessageReadDto message){
-        chat.addMessage(message);
+    public void notifyDataSetChangedIfPossible(MessageReadDto message){
+//        chat.addMessage(message);
+        if(message.getChatId() == chat.getId())
+            messages.setAdapter(new MessageAdapter(requireActivity().getApplicationContext(), chat.getMessages(), getAuthenticatedUser()));
+
+//            messages.getAdapter().notifyItemInserted(0);
+//        messages.getLayoutManager().scrollToPosition(0);
+//        Collections.reverse(chat);
 //        List<MessageReadDto> listOfMessages = chat.getMessages().stream().sorted((m1, m2) -> {
 //            try {
 //                String formattedDate1 = new SimpleDateFormat("dd MMM yyyy HH:mm:ss").format(
@@ -94,6 +94,16 @@ public class Chat extends UtilityFragment {
 //        chat.getMessages().clear();
 //        chat.getMessages().addAll(listOfMessages);
 
+//        messages.setLayoutManager(
+//                new LinearLayoutManager(requireContext()){{
+////                    setStackFromEnd(false);
+//                    setReverseLayout(true);
+//                }}
+//        );
+//        synchronized (messages) {
+//            messages.notify();
+//            messages.
+//        }
         messages.setAdapter(new MessageAdapter(requireActivity().getApplicationContext(), chat.getMessages(), getAuthenticatedUser()));
     }
 

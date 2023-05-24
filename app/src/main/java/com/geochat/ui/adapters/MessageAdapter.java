@@ -40,12 +40,12 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageViewHolder> {
             viewHolder.getMessageContainer().setGravity(Gravity.LEFT);
             viewHolder.getSenderUsernameLeft().setVisibility(View.VISIBLE);
             viewHolder.getSenderUsernameRight().setVisibility(View.GONE);
-            viewHolder.getSenderUsernameLeft().setText(messages.get(position).getUsername());
+            viewHolder.getSenderUsernameLeft().setText(messages.get(position).getUserName());
         } else {
             viewHolder.getMessageContainer().setGravity(Gravity.RIGHT);
             viewHolder.getSenderUsernameLeft().setVisibility(View.GONE);
             viewHolder.getSenderUsernameRight().setVisibility(View.VISIBLE);
-            viewHolder.getSenderUsernameRight().setText(messages.get(position).getUsername());
+            viewHolder.getSenderUsernameRight().setText(messages.get(position).getUserName());
         }
         viewHolder.getContent().setText(messages.get(position).getContent());
         viewHolder.getTimeSent().setText(messages.get(position).getTimeSent());

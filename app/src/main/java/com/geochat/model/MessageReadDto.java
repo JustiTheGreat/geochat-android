@@ -10,7 +10,7 @@ public class MessageReadDto {
     @JsonProperty("userId")
     public String userId;
     @JsonProperty("userName")
-    public String username;
+    public String userName;
     @JsonProperty("content")
     public String content;
     @JsonProperty("timeSent")
@@ -28,8 +28,8 @@ public class MessageReadDto {
         return userId;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
 
     public String getContent() {

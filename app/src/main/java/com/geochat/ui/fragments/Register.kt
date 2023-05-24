@@ -71,7 +71,7 @@ class Register : UtilityFragment() {
     }
 
     override fun callback(caller: Any?, result: Any?) {
-        if (caller is LoginTask) {
+        if (caller is RegisterTask) {
             toast(getString(R.string.register_successful))
             enableActivityTouchInput()
             navigateTo(R.id.action_register_to_login)

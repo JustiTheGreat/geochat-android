@@ -11,7 +11,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -154,7 +153,8 @@ public class Chats extends UtilityFragment {
                             @Override
                             public void run() {
                                 if (getCurrentFragment() instanceof Chat) {
-                                    ((Chat) getCurrentFragment()).updateChat(message);
+                                    addMessageToChat(message);
+                                    ((Chat) getCurrentFragment()).notifyDataSetChangedIfPossible(message);
                                     //addMessageToChat(message);
                                 }else if (getCurrentFragment() instanceof Chats) {
                                     addMessageToChat(message);

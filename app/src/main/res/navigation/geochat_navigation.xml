@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/geochat_navigation"
+    app:startDestination="@id/login">
+
+    <fragment
+        android:id="@+id/login"
+        android:name="com.geochat.ui.fragments.Login"
+        android:label="@string/login"
+        tools:layout="@layout/login" >
+        <action
+            android:id="@+id/action_login_to_register"
+            app:destination="@id/register" />
+        <action
+            android:id="@+id/action_login_to_chats"
+            app:destination="@id/conversations" />
+    </fragment>
+    <fragment
+        android:id="@+id/register"
+        android:name="com.geochat.ui.fragments.Register"
+        android:label="@string/register"
+        tools:layout="@layout/register" >
+        <action
+            android:id="@+id/action_register_to_login"
+            app:destination="@id/login" />
+    </fragment>
+    <fragment
+        android:id="@+id/conversations"
+        android:name="com.geochat.ui.fragments.Chats"
+        android:label="@string/conversations">
+        <action
+            android:id="@+id/action_chats_to_login"
+            app:destination="@id/login" />
+        <action
+            android:id="@+id/action_chats_to_chat"
+            app:destination="@id/chat" />
+    </fragment>
+    <fragment
+        android:id="@+id/chat"
+        android:name="com.geochat.ui.fragments.Chat"
+        android:label="@string/chat">
+        <action
+            android:id="@+id/action_chat_to_login"
+            app:destination="@id/login" />
+    </fragment>
+</navigation>

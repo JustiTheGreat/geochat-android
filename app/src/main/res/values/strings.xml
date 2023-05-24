@@ -1,3 +1,43 @@
 <resources>
+    <string name="empty" />
     <string name="app_name">GeoChat</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="log_out">Logout</string>
+    <string name="user_descriptor">User:</string>
+    <string name="user_hint">username or e-mail</string>
+    <string name="username_descriptor">Username:</string>
+    <string name="username_hint">username</string>
+    <string name="email_descriptor">E-mail:</string>
+    <string name="email_hint">e-mail</string>
+    <string name="password_descriptor">Password:</string>
+    <string name="password_hint">password</string>
+
+    <string name="conversations">Conversations</string>
+    <string name="search_for_a_group_or_person">Search for a group or person</string>
+    <string name="join_conversation">Join conversation</string>
+    <string name="person">PERSON</string>
+    <string name="group">GROUP</string>
+
+    <string name="chat">Chat</string>
+    <string name="write_message">Write message …</string>
+    <string name="send">Send</string>
+
+    <string name="unknown_data">\?\?\?</string>
+<!--    messages-->
+    <string name="register_successful">Register successful!</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="click_here_to_register"><u>Click here to register!</u></string>
+    <string name="please_input_your_username_or_email">Please input your username or e-mail!</string>
+    <string name="please_input_your_username">Please input your username</string>
+    <string name="please_input_your_email">Please input your e-mail!</string>
+    <string name="please_input_your_password">Please input your password!</string>
+    <string name="wrong_credentials">Wrong credentials!</string>
+    <string name="unauthorized_access">Unauthorized access!</string>
+    <string name="not_found">Not found!</string>
+    <string name="internal_server_error">Internal server error!</string>
+    <string name="unexpected_server_response">Unexpected server response!</string>
+    <string name="connection_problems">Connection problems!</string>
+<!--    preferences-->
+    <string name="authentication_token">AuthToken</string>
 </resources>

@@ -11,7 +11,7 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.geochat.R;
-import com.geochat.model.read_dtos.ChatReadDTO;
+import com.geochat.model.read_dtos.ChatReadDto;
 import com.geochat.ui.fragments.ICallbackContext;
 import com.geochat.ui.view_holders.ChatPreviewViewHolder;
 
@@ -20,9 +20,9 @@ import java.util.List;
 public class ChatPreviewAdapter extends RecyclerView.Adapter<ChatPreviewViewHolder> {
     private final Context context;
     private final ICallbackContext callbackContext;
-    private final List<ChatReadDTO> chats;
+    private final List<ChatReadDto> chats;
 
-    public ChatPreviewAdapter(Context context, ICallbackContext callbackContext, List<ChatReadDTO> chats) {
+    public ChatPreviewAdapter(Context context, ICallbackContext callbackContext, List<ChatReadDto> chats) {
         this.context = context;
         this.callbackContext = callbackContext;
         this.chats = chats;

@@ -17,21 +17,26 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.geochat.R;
 import com.geochat.databinding.ChatBinding;
-import com.geochat.model.Message;
-import com.geochat.model.read_dtos.ChatReadDTO;
+import com.geochat.model.MessageReadDto;
+import com.geochat.model.read_dtos.ChatReadDto;
 import com.geochat.model.write_dtos.MessageWriteDTO;
 import com.geochat.preference_managers.PreferenceManager;
 import com.geochat.tasks.CreateMessageTask;
 import com.geochat.tasks.FallibleTask;
 import com.geochat.ui.adapters.MessageAdapter;
 
-import java.util.Collections;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Chat extends UtilityFragment {
     private RecyclerView messages;
     private EditText messageEditText;
     private Button sendMessage;
-    private ChatReadDTO chat;
+    private ChatReadDto chat;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @SuppressLint("ClickableViewAccessibility")
@@ -67,8 +72,28 @@ public class Chat extends UtilityFragment {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void updateChat(Message message){
+    public void updateChat(MessageReadDto message){
         chat.addMessage(message);
+//        List<MessageReadDto> listOfMessages = chat.getMessages().stream().sorted((m1, m2) -> {
+//            try {
+//                String formattedDate1 = new SimpleDateFormat("dd MMM yyyy HH:mm:ss").format(
+//                        new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+//                                .parse(m1.getTimeSent()));
+//                Date date1 = new Date(formattedDate1);
+//
+//                String formattedDate2 = new SimpleDateFormat("dd MMM yyyy HH:mm:ss").format(
+//                        new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+//                                .parse(m1.getTimeSent()));
+//                Date date2 = new Date(formattedDate1);
+//                return date1.compareTo(date2);
+//            } catch (ParseException e) {
+//                throw new RuntimeException(e);
+//            }
+//
+//        }).collect(Collectors.toList());
+//        chat.getMessages().clear();
+//        chat.getMessages().addAll(listOfMessages);
+
         messages.setAdapter(new MessageAdapter(requireActivity().getApplicationContext(), chat.getMessages(), getAuthenticatedUser()));
     }
 

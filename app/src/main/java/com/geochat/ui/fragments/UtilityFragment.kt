@@ -17,7 +17,7 @@ import com.geochat.Transformers.JwtTokenDecoder
 import com.geochat.location_listeners.GeoChatLocationListener
 import com.geochat.model.Server
 import com.geochat.model.AuthenticatedUser
-import com.geochat.model.read_dtos.ChatReadDTO
+import com.geochat.model.read_dtos.ChatReadDto
 import com.geochat.preference_managers.PreferenceManager
 import com.geochat.storages.Storage
 import com.geochat.ui.activities.MainActivity
@@ -117,11 +117,11 @@ abstract class UtilityFragment : Fragment(), ICallbackContext {
         Storage.setCurrentServer(server)
     }
 
-    protected fun setOpenChat(chat: ChatReadDTO) {
+    protected fun setOpenChat(chat: ChatReadDto) {
         Storage.setOpenChat(chat)
     }
 
-    protected fun getOpenChat(): ChatReadDTO? {
+    protected fun getOpenChat(): ChatReadDto? {
         return Storage.getOpenChat()
     }
 

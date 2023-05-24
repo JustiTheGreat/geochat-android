@@ -2,19 +2,19 @@ package com.geochat.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Message {
+public class MessageReadDto {
     @JsonProperty("id")
-    private int id;
+    public int id;
     @JsonProperty("chatId")
-    private int chatId;
+    public int chatId;
     @JsonProperty("userId")
-    private String userId;
+    public String userId;
     @JsonProperty("userName")
-    private String username;
+    public String username;
     @JsonProperty("content")
-    private String content;
+    public String content;
     @JsonProperty("timeSent")
-    private String timeSent;
+    public String timeSent;
 
     public int getId() {
         return id;

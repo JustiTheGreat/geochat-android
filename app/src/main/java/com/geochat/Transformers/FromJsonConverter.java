@@ -1,7 +1,7 @@
 package com.geochat.Transformers;
 
-import com.geochat.model.read_dtos.ChatReadDTO;
-import com.geochat.model.Message;
+import com.geochat.model.read_dtos.ChatReadDto;
+import com.geochat.model.MessageReadDto;
 import com.geochat.model.Server;
 import com.geochat.model.AuthenticatedUser;
 import com.geochat.model.read_dtos.UserReadDTO;
@@ -50,16 +50,16 @@ public class FromJsonConverter {
         return new Gson().fromJson(jsonString, Server.class);
     }
 
-    public static ChatReadDTO convertToChat(String jsonString) {
-        return new Gson().fromJson(jsonString, ChatReadDTO.class);
+    public static ChatReadDto convertToChat(String jsonString) {
+        return new Gson().fromJson(jsonString, ChatReadDto.class);
     }
 
-    public static Message convertToMessage(String jsonString) {
-        return new Gson().fromJson(jsonString, Message.class);
+    public static MessageReadDto convertToMessage(String jsonString) {
+        return new Gson().fromJson(jsonString, MessageReadDto.class);
     }
 
-    public static List<ChatReadDTO> convertToChatList(@Nullable String jsonString) {
-        return new Gson().fromJson(jsonString, new TypeToken<List<ChatReadDTO>>() {
+    public static List<ChatReadDto> convertToChatList(@Nullable String jsonString) {
+        return new Gson().fromJson(jsonString, new TypeToken<List<ChatReadDto>>() {
         }.getType());
     }
 }

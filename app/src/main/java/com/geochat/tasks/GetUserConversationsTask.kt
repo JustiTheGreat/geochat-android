@@ -4,15 +4,15 @@ import androidx.fragment.app.Fragment
 import com.geochat.R
 import com.geochat.ServiceURLs
 import com.geochat.Transformers.FromJsonConverter
-import com.geochat.model.read_dtos.ChatReadDTO
+import com.geochat.model.read_dtos.ChatReadDto
 import com.geochat.ui.fragments.ICallbackContext
 import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 
 class GetUserConversationsTask(callbackContext: ICallbackContext?, authToken: String?, private val serverUrl: String?)
-    : GeneralisedTask<List<ChatReadDTO?>?>(callbackContext, authToken) {
+    : GeneralisedTask<List<ChatReadDto?>?>(callbackContext, authToken) {
 
-    override fun doInBackground(vararg p0: Void): List<ChatReadDTO?>? {
+    override fun doInBackground(vararg p0: Void): List<ChatReadDto?>? {
         return try {
             val url = serverUrl + ServiceURLs.GET_USER_CONVERSATIONS_ROUTE
             val connection = URL(url).openConnection() as HttpsURLConnection

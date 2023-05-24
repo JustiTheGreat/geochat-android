@@ -11,17 +11,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.geochat.R;
 import com.geochat.model.AuthenticatedUser;
-import com.geochat.model.Message;
+import com.geochat.model.MessageReadDto;
 import com.geochat.ui.view_holders.MessageViewHolder;
 
 import java.util.List;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageViewHolder> {
     private final Context context;
-    private final List<Message> messages;
+    private final List<MessageReadDto> messages;
     private final AuthenticatedUser authenticatedUser;
 
-    public MessageAdapter(Context context, List<Message> messages, AuthenticatedUser authenticatedUser) {
+    public MessageAdapter(Context context, List<MessageReadDto> messages, AuthenticatedUser authenticatedUser) {
         this.context = context;
         this.messages = messages;
         this.authenticatedUser = authenticatedUser;

@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,18 +27,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.geochat.Constants;
 import com.geochat.R;
-import com.geochat.ServiceURLs;
-import com.geochat.Transformers.FromJsonConverter;
 import com.geochat.databinding.ConversationsBinding;
 import com.geochat.location_listeners.GeoChatLocationListener;
-import com.geochat.model.Message;
-import com.geochat.model.read_dtos.ChatReadDTO;
+import com.geochat.model.MessageReadDto;
+import com.geochat.model.read_dtos.ChatReadDto;
 import com.geochat.model.SearchItem;
 import com.geochat.model.Server;
 import com.geochat.model.read_dtos.UserReadDTO;
 import com.geochat.model.write_dtos.ChatWriteDTO;
 import com.geochat.preference_managers.PreferenceManager;
-import com.geochat.storages.Storage;
 import com.geochat.tasks.CreateChatTask;
 import com.geochat.tasks.FallibleTask;
 import com.geochat.tasks.GetAllUsersTask;
@@ -48,16 +46,16 @@ import com.geochat.ui.adapters.ChatPreviewAdapter;
 import com.geochat.ui.adapters.SearchItemAdapter;
 import com.microsoft.signalr.HubConnection;
 import com.microsoft.signalr.HubConnectionBuilder;
-import com.microsoft.signalr.OnClosedCallback;
+import com.microsoft.signalr.TypeReference;
 
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 import io.reactivex.rxjava3.core.Single;
-
 public class Chats extends UtilityFragment {
-    private static List<ChatReadDTO> userChats;
+    private static List<ChatReadDto> userChats;
     private List<SearchItem> searchItems;
     private SearchItem selectedSearchItem;
     private RecyclerView recyclerView;
@@ -139,8 +137,8 @@ public class Chats extends UtilityFragment {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void callback(@Nullable Object caller, @Nullable Object result) {
+        //toast("oncallback");
         if (caller instanceof GetServerByCoordinatesTask) {
-
             Server server = (Server) result;
             if (haveCurrentServer() && server.getId() == getCurrentServerId())
                 return;
@@ -149,35 +147,50 @@ public class Chats extends UtilityFragment {
             HubConnection hubConnection = HubConnectionBuilder.create(getCurrentServerUrl() + CHAT_HUB_ROUTE)
                     .withAccessTokenProvider(Single.defer(() -> Single.just(PreferenceManager.getAuthToken(requireActivity()))))
                     .build();
-            hubConnection.on("MessageReceived", (message) -> {
-                toast(message.getContent());
-                if (getCurrentFragment() instanceof Chat) {
-                    ((Chat) getCurrentFragment()).updateChat(message);
-                    addMessageToChat(message);
-                }else if (getCurrentFragment() instanceof Chats) {
-                    addMessageToChat(message);
-                    setRecyclerViewAdapter();
-                }
+            Type msgType = new TypeReference<MessageReadDto>() {}.getType();
+            hubConnection.<MessageReadDto>on("MessageReceived", (message) -> {
+                this.getActivity().runOnUiThread(
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                if (getCurrentFragment() instanceof Chat) {
+                                    ((Chat) getCurrentFragment()).updateChat(message);
+                                    //addMessageToChat(message);
+                                }else if (getCurrentFragment() instanceof Chats) {
+                                    addMessageToChat(message);
+                                    setRecyclerViewAdapter();
+                                }
+                            }
+                        }
+                );
+            }, msgType);
 
-            }, Message.class);
-            hubConnection.<ChatReadDTO>on("ChatCreated", (chat) -> {
-                toast(chat.getChatName());
-                if (getCurrentFragment() instanceof Chats) {
-//                    ChatReadDTO c = FromJsonConverter.convertToChat(chat);
-                    userChats.add(chat);
-                    setRecyclerViewAdapter();
-                } else if (getCurrentFragment() instanceof Chat) {
-                    userChats.add(chat);
-                    setRecyclerViewAdapter();
-                }
-            }, ChatReadDTO.class);
+            Type chatType = new TypeReference<ChatReadDto>() { }.getType();
+            hubConnection.<ChatReadDto>on("ChatCreated", (chat) -> {
+                this.getActivity().runOnUiThread(
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                if (getCurrentFragment() instanceof Chats) {
+                                    userChats.add(chat);
+                                    setRecyclerViewAdapter();
+                                } else if (getCurrentFragment() instanceof Chat) {
+                                    userChats.add(chat);
+                                    setRecyclerViewAdapter();
+                                }
+                            }
+                        }
+                );
+            }, chatType);
+
             hubConnection.onClosed(exception -> {
-                toast(exception.getMessage());
+                toast(exception.toString());
                 hubConnection.start();
                     }
             );
             setHubConnection(hubConnection);
             hubConnection.start().doOnComplete(()-> new GetUserConversationsTask(this, PreferenceManager.getAuthToken(requireActivity()), getCurrentServerUrl()).execute()).blockingAwait();
+            toast(hubConnection.toString());
 //            toast(((Server) result).getUrl());
         } else if (caller instanceof GetAllUsersTask) {
             searchItems = ((List<UserReadDTO>) result).stream().map(user -> new SearchItem(user, Constants.ROMANIA)).collect(Collectors.toList());
@@ -185,7 +198,7 @@ public class Chats extends UtilityFragment {
             autoCompleteTextView.setAdapter(new SearchItemAdapter(requireActivity(), searchItems, requireActivity()));
             enableActivityTouchInput();
         } else if (caller instanceof GetUserConversationsTask) {
-            userChats = (List<ChatReadDTO>) result;
+            userChats = (List<ChatReadDto>) result;
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             setRecyclerViewAdapter();
             enableActivityTouchInput();
@@ -195,8 +208,8 @@ public class Chats extends UtilityFragment {
         }
     }
 
-    private void addMessageToChat(Message message){
-        for (ChatReadDTO chat: userChats) {
+    private void addMessageToChat(MessageReadDto message){
+        for (ChatReadDto chat: userChats) {
             if(chat.getId() == message.getChatId()){
                 chat.addMessage(message);
                 break;
@@ -213,5 +226,6 @@ public class Chats extends UtilityFragment {
         if (caller instanceof FallibleTask) {
             toast(((FallibleTask) caller).getErrorMessage());
         }
+        enableActivityTouchInput();
     }
 }

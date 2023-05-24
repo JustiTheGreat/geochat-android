@@ -1,7 +1,7 @@
 package com.geochat.storages
 
 import com.geochat.location_listeners.GeoChatLocationListener
-import com.geochat.model.read_dtos.ChatReadDTO
+import com.geochat.model.read_dtos.ChatReadDto
 import com.geochat.model.Server
 import com.microsoft.signalr.HubConnection
 
@@ -9,7 +9,7 @@ object Storage {
     private var geoChatLocationListener: GeoChatLocationListener? = null
     private var hubConnection: HubConnection? = null
     private var currentServer: Server? = null
-    private var openChatReadDTO: ChatReadDTO? = null
+    private var openChatReadDto: ChatReadDto? = null
 
     fun getGeoChatLocationListener(): GeoChatLocationListener? {
         return geoChatLocationListener
@@ -35,11 +35,11 @@ object Storage {
         Storage.currentServer = currentServer
     }
 
-    fun getOpenChat(): ChatReadDTO? {
-        return openChatReadDTO
+    fun getOpenChat(): ChatReadDto? {
+        return openChatReadDto
     }
 
-    fun setOpenChat(openChatReadDTO: ChatReadDTO?) {
-        Storage.openChatReadDTO = openChatReadDTO
+    fun setOpenChat(openChatReadDto: ChatReadDto?) {
+        Storage.openChatReadDto = openChatReadDto
     }
 }

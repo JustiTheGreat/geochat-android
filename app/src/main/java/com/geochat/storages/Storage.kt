@@ -7,8 +7,9 @@ import com.microsoft.signalr.HubConnection
 
 object Storage {
     private var geoChatLocationListener: GeoChatLocationListener? = null
-    private var hubConnection: HubConnection? = null
     private var currentServer: Server? = null
+    private var hubConnection: HubConnection? = null
+    private var userChats: List<ChatReadDto>? = null
     private var openChatReadDto: ChatReadDto? = null
 
     fun getGeoChatLocationListener(): GeoChatLocationListener? {
@@ -19,6 +20,14 @@ object Storage {
         Storage.geoChatLocationListener = geoChatLocationListener
     }
 
+    fun getCurrentServer(): Server? {
+        return currentServer
+    }
+
+    fun setCurrentServer(currentServer: Server?) {
+        Storage.currentServer = currentServer
+    }
+
     fun getHubConnection(): HubConnection? {
         return hubConnection
     }
@@ -27,12 +36,16 @@ object Storage {
         Storage.hubConnection = hubConnection
     }
 
-    fun getCurrentServer(): Server? {
-        return currentServer
+    fun getUserChats(): List<ChatReadDto>? {
+        return userChats
     }
 
-    fun setCurrentServer(currentServer: Server?) {
-        Storage.currentServer = currentServer
+    fun setUserChats(userChats: List<ChatReadDto>?) {
+        Storage.userChats = userChats
+    }
+
+    fun addUserChat(chat: ChatReadDto) {
+        if (userChats != null) userChats = userChats!! + chat
     }
 
     fun getOpenChat(): ChatReadDto? {

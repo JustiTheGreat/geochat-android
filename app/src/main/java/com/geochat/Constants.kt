@@ -1,5 +1,7 @@
-package com.geochat;
+package com.geochat
 
-public interface Constants {
-    String ROMANIA = "Romania";
+interface Constants {
+    companion object {
+        const val ROMANIA = "Romania"
+    }
 }

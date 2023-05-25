@@ -15,8 +15,8 @@ import androidx.navigation.fragment.NavHostFragment
 import com.geochat.Transformers.FromJsonConverter
 import com.geochat.Transformers.JwtTokenDecoder
 import com.geochat.location_listeners.GeoChatLocationListener
-import com.geochat.model.Server
 import com.geochat.model.AuthenticatedUser
+import com.geochat.model.Server
 import com.geochat.model.read_dtos.ChatReadDto
 import com.geochat.preference_managers.PreferenceManager
 import com.geochat.storages.Storage
@@ -37,13 +37,27 @@ abstract class UtilityFragment : Fragment(), ICallbackContext {
         Toast.makeText(activity, message, Toast.LENGTH_LONG).show()
     }
 
+    protected fun getAuthToken(): String? {
+        return PreferenceManager.getAuthToken(requireActivity())
+    }
+
+    protected fun putAuthToken(authToken: String?) {
+        return PreferenceManager.putAuthToken(requireActivity(), authToken)
+    }
+
+    protected fun authTokenIsAvailable(): Boolean {
+        return PreferenceManager.authTokenIsAvailable(requireActivity())
+    }
+
+    protected fun removeAuthToken() {
+        PreferenceManager.removeAuthToken(requireActivity())
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     protected fun getAuthenticatedUser(): AuthenticatedUser {
         return FromJsonConverter.convertToUser(
             JwtTokenDecoder.getJson(
-                PreferenceManager.getAuthToken(
-                    requireActivity()
-                )
+                getAuthToken()
             )
         )
     }
@@ -79,13 +93,14 @@ abstract class UtilityFragment : Fragment(), ICallbackContext {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupUI(view)
+
     }
 
-    protected fun getCurrentFragment(): UtilityFragment{
+    protected fun getCurrentFragment(): UtilityFragment {
         return (requireActivity() as MainActivity).getCurrentFragment();
     }
 
-    protected fun getGeoChatLocationListener(): GeoChatLocationListener?{
+    protected fun getGeoChatLocationListener(): GeoChatLocationListener? {
         return Storage.getGeoChatLocationListener()
     }
 
@@ -93,7 +108,7 @@ abstract class UtilityFragment : Fragment(), ICallbackContext {
         Storage.setGeoChatLocationListener(geoChatLocationListener)
     }
 
-    protected fun getHubConnection(): HubConnection?{
+    protected fun getHubConnection(): HubConnection? {
         return Storage.getHubConnection()
     }
 
@@ -117,12 +132,24 @@ abstract class UtilityFragment : Fragment(), ICallbackContext {
         Storage.setCurrentServer(server)
     }
 
-    protected fun setOpenChat(chat: ChatReadDto) {
-        Storage.setOpenChat(chat)
+    protected fun getUserChats(): List<ChatReadDto>? {
+        return Storage.getUserChats()
+    }
+
+    protected fun setUserChats(userChats: List<ChatReadDto>?) {
+        Storage.setUserChats(userChats)
+    }
+
+    protected fun addUserChat(chat: ChatReadDto) {
+        Storage.addUserChat(chat)
     }
 
     protected fun getOpenChat(): ChatReadDto? {
         return Storage.getOpenChat()
+    }
+
+    protected fun setOpenChat(chat: ChatReadDto?) {
+        Storage.setOpenChat(chat)
     }
 
     protected fun enableActivityTouchInput() {

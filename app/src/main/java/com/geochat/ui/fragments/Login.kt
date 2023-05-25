@@ -10,7 +10,6 @@ import androidx.annotation.RequiresApi
 import com.geochat.R
 import com.geochat.databinding.LoginBinding
 import com.geochat.model.write_dtos.AuthenticationWriteDTO
-import com.geochat.preference_managers.PreferenceManager
 import com.geochat.tasks.FallibleTask
 import com.geochat.tasks.LoginTask
 
@@ -25,6 +24,8 @@ class Login : UtilityFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        setLogoutVisibility(false)
+
         binding = LoginBinding.inflate(inflater, container, false)
         user = binding!!.loginUserTB
         password = binding!!.loginPasswordTB
@@ -36,15 +37,9 @@ class Login : UtilityFragment() {
     override fun onStart() {
         super.onStart()
         resetEditTexts()
-        setLogoutVisibility(false)
-        if (PreferenceManager.authTokenIsAvailable(requireActivity())) {
+        if (authTokenIsAvailable()) {
             navigateTo(R.id.action_login_to_chats)
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
     }
 
     private fun resetEditTexts() {
@@ -71,7 +66,7 @@ class Login : UtilityFragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun callback(caller: Any?, result: Any?) {
         if (caller is LoginTask) {
-            PreferenceManager.putAuthToken(requireActivity(), result as String)
+            putAuthToken(result as String)
             enableActivityTouchInput()
             navigateTo(R.id.action_login_to_chats)
         }

@@ -9,7 +9,6 @@ import com.geochat.R
 import com.geochat.databinding.RegisterBinding
 import com.geochat.model.write_dtos.RegistrationWriteDTO
 import com.geochat.tasks.FallibleTask
-import com.geochat.tasks.LoginTask
 import com.geochat.tasks.RegisterTask
 
 class Register : UtilityFragment() {
@@ -34,11 +33,6 @@ class Register : UtilityFragment() {
     override fun onStart() {
         super.onStart()
         resetEditTexts()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
     }
 
     private fun resetEditTexts() {

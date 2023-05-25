@@ -13,6 +13,7 @@ import com.geochat.ui.fragments.Chats;
 
 public class GeoChatLocationListener implements LocationListener {
     private final MainActivity mainActivity;
+
     public GeoChatLocationListener(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
     }

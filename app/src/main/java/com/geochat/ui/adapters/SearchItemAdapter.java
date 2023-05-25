@@ -39,13 +39,7 @@ public class SearchItemAdapter extends ArrayAdapter<SearchItem> {
     private final Filter filter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            List<SearchItem> suggestions = new ArrayList<>();
-//            if (constraint == null || constraint.toString().trim().length() == 0)
-                suggestions.addAll(defaultData);
-//            else defaultData.forEach(searchItem -> {
-//                if (searchItem.getUsername().toLowerCase().contains(constraint.toString().toLowerCase().trim()))
-//                    suggestions.add(searchItem);
-//            });
+            List<SearchItem> suggestions = new ArrayList<>(defaultData);
             return new FilterResults() {{
                 this.values = suggestions;
                 this.count = suggestions.size();

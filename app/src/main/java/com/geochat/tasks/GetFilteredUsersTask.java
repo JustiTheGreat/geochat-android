@@ -13,20 +13,20 @@ import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class GetAllUsersTask extends GeneralisedTask<List<UserReadDTO>> {
+public class GetFilteredUsersTask extends GeneralisedTask<List<UserReadDTO>> {
     private final String serverUrl;
-    private final String filter;
+    private final String pattern;
 
-    public GetAllUsersTask(ICallbackContext callbackContext, String authToken, String serverUrl, String filter) {
+    public GetFilteredUsersTask(ICallbackContext callbackContext, String authToken, String serverUrl, String pattern) {
         super(callbackContext, authToken);
         this.serverUrl = serverUrl;
-        this.filter = filter;
+        this.pattern = pattern;
     }
 
     @Override
     protected List<UserReadDTO> doInBackground(Void... voids) {
         try {
-            String url = serverUrl + ServiceURLs.GET_ALL_USERS_ROUTE.replace("{filter}", filter);
+            String url = serverUrl + ServiceURLs.GET_ALL_USERS_ROUTE.replace("{pattern}", pattern);
             HttpsURLConnection connection = (HttpsURLConnection) new URL(url).openConnection();
             connection.setRequestMethod("GET");
             connection.setDoOutput(false);

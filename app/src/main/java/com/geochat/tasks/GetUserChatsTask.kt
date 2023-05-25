@@ -9,7 +9,7 @@ import com.geochat.ui.fragments.ICallbackContext
 import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 
-class GetUserConversationsTask(callbackContext: ICallbackContext?, authToken: String?, private val serverUrl: String?)
+class GetUserChatsTask(callbackContext: ICallbackContext?, authToken: String?, private val serverUrl: String?)
     : GeneralisedTask<List<ChatReadDto?>?>(callbackContext, authToken) {
 
     override fun doInBackground(vararg p0: Void): List<ChatReadDto?>? {

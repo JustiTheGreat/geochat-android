@@ -4,17 +4,15 @@
     <string name="login">Login</string>
     <string name="register">Register</string>
     <string name="log_out">Logout</string>
-    <string name="user_descriptor">User:</string>
-    <string name="user_hint">username or e-mail</string>
     <string name="username_descriptor">Username:</string>
-    <string name="username_hint">username</string>
+    <string name="username_hint">Username</string>
     <string name="email_descriptor">E-mail:</string>
-    <string name="email_hint">e-mail</string>
+    <string name="email_hint">E-mail</string>
     <string name="password_descriptor">Password:</string>
-    <string name="password_hint">password</string>
+    <string name="password_hint">Password</string>
 
     <string name="conversations">Conversations</string>
-    <string name="search_for_a_group_or_person">Search for a group or person</string>
+    <string name="search_for_a_person">Search for a person</string>
     <string name="join_conversation">Join conversation</string>
     <string name="person">PERSON</string>
     <string name="group">GROUP</string>

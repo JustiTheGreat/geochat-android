@@ -43,9 +43,8 @@ public class ChatReadDto {
         return locationId;
     }
 
-    public void addMessage(MessageReadDto message){
+    public void addMessage(MessageReadDto message) {
         messages.add(0, message);
-//        messages.add(message);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)

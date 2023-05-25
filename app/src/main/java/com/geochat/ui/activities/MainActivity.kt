@@ -17,7 +17,6 @@ import androidx.navigation.ui.NavigationUI.navigateUp
 import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import com.geochat.R
 import com.geochat.databinding.ActivityMainBinding
-import com.geochat.location_listeners.GeoChatLocationListener
 import com.geochat.preference_managers.PreferenceManager
 import com.geochat.ui.fragments.Chat
 import com.geochat.ui.fragments.Chats
@@ -94,17 +93,6 @@ class MainActivity : AppCompatActivity() {
             (supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment?)!!
         return navHostFragment.childFragmentManager.fragments[0] as UtilityFragment
     }
-
-//todo delete
-//    fun f(){
-//        val navHostFragment =
-//            (supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment?)!!
-//        val conversations = navHostFragment.childFragmentManager.fragments[0] as UtilityFragment
-//        navHostFragment.childFragmentManager.fragments.apply {
-//            clear()
-//            add(conversations)
-//        }
-//    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId

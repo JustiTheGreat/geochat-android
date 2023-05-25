@@ -85,7 +85,7 @@ public class Chats extends UtilityFragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                String pattern = charSequence.toString().trim().toLowerCase();
+                String pattern = charSequence.toString().trim();
                 if (pattern.isEmpty()) return;
                 disableActivityTouchInput();
                 new GetFilteredUsersTask(Chats.this, getAuthToken(), getCurrentServerUrl(), pattern).execute();
@@ -181,7 +181,7 @@ public class Chats extends UtilityFragment {
                 ((Chat) getCurrentFragment()).updateChatFragment(message.getChatId());
             } else if (getCurrentFragment() instanceof Chats) {
                 addMessageToChat(message);
-                chats.getAdapter().notifyDataSetChanged();
+                chats.setAdapter(new ChatPreviewAdapter(requireActivity().getApplicationContext(), this, getUserChats()));
             }
         }), new TypeToken<MessageReadDto>() {
         }.getType());
@@ -190,7 +190,7 @@ public class Chats extends UtilityFragment {
         hubConnection.<ChatReadDto>on("ChatCreated", chat -> requireActivity().runOnUiThread(() -> {
             if (getCurrentFragment() instanceof Chats || getCurrentFragment() instanceof Chat) {
                 addUserChat(chat);
-                chats.getAdapter().notifyDataSetChanged();
+                chats.setAdapter(new ChatPreviewAdapter(requireActivity().getApplicationContext(), this, getUserChats()));
             }
         }), new TypeToken<ChatReadDto>() {
         }.getType());
